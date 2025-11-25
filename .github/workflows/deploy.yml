@@ -28,7 +28,7 @@ jobs:
 
     - name: Build Jupyter Book
       run: |
-        jupyter-book build devopsbook
+        jupyter-book build sqlbook
 
     - name: 🚀 Deploy to GitHub Pages
       env:
