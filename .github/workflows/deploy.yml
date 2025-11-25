@@ -36,5 +36,5 @@ jobs:
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
-        ghp-import -n -f devopsbook/_build/html
+        ghp-import -n -f sqlbook/_build/html
         git push "https://x-access-token:$GH_PATH@github.com/${{ github.repository }}.git" gh-pages --force
