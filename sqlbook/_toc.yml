@@ -5,3 +5,4 @@ format: jb-book
 root: 1_Introduction_to_SQL
 chapters:
   - file: 2_Querying_Data
+  - file: 3_Data_Definition_Language
