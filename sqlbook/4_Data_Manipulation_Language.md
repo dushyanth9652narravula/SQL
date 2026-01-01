@@ -1,4 +1,4 @@
-# Data_Manipulation_Language
+# Data Manipulation Language
 
 - Data Manipulation Language is simply used to insert, update or delete the data present in the table or database. In order to do this, we have generally 3 clauses in SQL. Those are INSERT, UPDATE, DELETE.
 
