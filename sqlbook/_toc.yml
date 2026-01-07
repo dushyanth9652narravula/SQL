@@ -8,3 +8,6 @@ chapters:
   - file: 3_Data_Definition_Language
   - file: 4_Data_Manipulation_Language
   - file: 5_Filtering_Data
+  - file: 5_Combining_Data/01_Introduction_to_combining_data
+    sections:
+      - file: 5_Combining_Data/02_SQL_Joins
