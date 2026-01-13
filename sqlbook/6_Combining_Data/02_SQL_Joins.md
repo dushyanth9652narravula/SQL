@@ -18,6 +18,12 @@
 
 - In SQL, NO JOIN is returning the data from two tables without combining them. The basic syntax of NO JOIN is simply two select statements of both tables returning all the columns
 
+  <p align="center">
+  <img src="./_static/No_join.png" alt="No Join" width="1000"/>
+  <br>
+  <em>No Join</em>
+  </p>
+
 - **Syntax** :
 
   ```sql
@@ -48,18 +54,21 @@
 
 - In INNER JOIN order of table doesn't matter. If you place left with right table and right with left table the output remains same.
 
+  <p align="center">
+  <img src="./_static/Inner_join.png" alt="Inner Join" width="1000"/>
+  <br>
+  <em>Inner Join</em>
+  </p>
+
 - **Syntax** :
 
   ```sql
 
   SELECT
-  t1.col1,
-  t1.col2,
-  t2.col1,
-  t2.col3
-  FROM table1 as t1
-  INNER JOIN table2 as t2
-  ON t1.col1 = t2.col1
+  *
+  FROM table1 as A
+  INNER JOIN table2 as B
+  ON A.key = B.key
 
   ```
 
@@ -88,18 +97,21 @@
 
 - IN LEFT JOIN order of the table matters a lot. If you switch the order, the output would change.
 
+  <p align="center">
+  <img src="./_static/Left_join.png" alt="Left Join" width="1000"/>
+  <br>
+  <em>Left Join</em>
+  </p>
+
 - The basic Syntax of LEFT JOIN is :
 
   ```sql
 
   SELECT 
-  t1.col1,
-  t1.col2,
-  t2.col1,
-  t2.col3
-  FROM table1 as t1
-  LEFT JOIN table2 as t2
-  ON t1.col = t2.col1
+  *
+  FROM table1 as A
+  LEFT JOIN table2 as B
+  ON A.key = B.key
 
   ```
 
@@ -128,18 +140,22 @@
 
 - In RIGHT JOIN also order of tables really matters. If you change the order, the output would change.
 
+  <p align="center">
+  <img src="./_static/Right_join.png" alt="Right Join" width="1000"/>
+  <br>
+  <em>Right Join</em>
+  </p>
+
+
 - The basic syntax of RIGHT JOIN is :
 
   ```sql
 
   SELECT 
-  t1.col1,
-  t1.col2,
-  t2.col1,
-  t2.col3
-  FROM table1 as t1
-  RIGHT JOIN table2 as t2
-  ON t1.col1 = t2.col1
+  *
+  FROM table1 as A
+  RIGHT JOIN table2 as B
+  ON A.key = B.key
 
   ```
 
@@ -166,18 +182,21 @@
 
 - In FULL JOIN, the order of tables doesn't matter. As we are getting all rows from both tables then order of tables doesn't matter here.
 
+  <p align="center">
+  <img src="./_static/Full_join.png" alt="Full Join" width="1000"/>
+  <br>
+  <em>Full Join</em>
+  </p>
+
 - The syntax is :
 
   ```sql
 
   SELECT
-  t1.col1,
-  t1.col2,
-  t2.col1,
-  t2.col3
-  FROM table1 as t1
-  FULL JOIN table2 as t2
-  ON t1.col1 = t2.col1
+  *
+  FROM table1 as A
+  FULL JOIN table2 as B
+  ON A.key = B.key
 
   ```
 
@@ -198,3 +217,148 @@
 
 - FULL JOIN is used to make a master table with all data from both the tables. It is also used to check existence but with one additional condition which we see in below joins.
 
+## LEFT ANTI JOIN
+
+- LEFT ANTI JOIN is LEFT JOIN with WHERE Filter. It actually returns the rows from the left table that has no match in right table which means we are getting unmatched data from left table.
+
+- We doesn't doesn't have any special keyword for left anti join. We use LEFT JOIN with WHERE Clause to get the result of LEFT ANTI JOIN.
+
+  <p align="center">
+  <img src="./_static/Left_Anti_Join.png" alt="Left Anti Join" width="1000"/>
+  <br>
+  <em>Left Anti Join</em>
+  </p>
+
+- The basic syntax is :
+
+  ```sql
+
+  SELECT *
+  FROM table1 as A
+  LEFT JOIN table2 as B
+  ON A.key = B.key
+  WHERE B.key IS NULL
+
+  ```
+
+- **Ex** : Return the customers who are not placed any order.
+
+  ```sql
+
+  SELECT *
+  FROM Customers as c
+  LEFT JOIN orders as o
+  ON c.id = o.customer_id
+  WHERE o.customer_id IS NULL
+
+  ```
+
+## RIGHT ANTI JOIN
+
+- In SQL, RIGHT ANTI JOIN returns the rows from right table that have no matching in left table which we are getting unmatched rows of right table. This is simple opposite to LEFT ANTI JOIN. So we can get this result by just changing the positions of table in LEFT ANTI JOIN or we can use RIGHT JOIN with WHERE clause.
+
+  <p align="center">
+  <img src="./_static/Right_Anti_Join.png" alt="Right Anti Join" width="1000"/>
+  <br>
+  <em>Right Anti Join</em>
+  </p>
+
+- The basic syntax of RIGHT ANTI JOIN is :
+
+  ```sql
+
+  SELECT *
+  FROM table1 as A
+  RIGHT JOIN table2 as B
+  ON A.key = B.key
+  WHERE A.key IS NULL
+
+  ```
+
+- **Ex** : Retrieve the orders which has no matching customers.
+
+  ```sql
+
+  SELECT *
+  FROM Customers as c
+  RIGHT JOIN Orders as o
+  ON c.id = o.customer_id
+  WHERE c.id IS NULL
+
+  ```
+
+## FULL ANTI JOIN
+
+- FULL ANTI JOIN in SQL is used to returns all the unmatching rows from both tables which means it returns rows that doesn't match either in both tables.
+
+- We doesn't have any FULL ANTI JOIN clause in SQL. So we use FULL JOIN + WHERE Clause.
+
+  <p align="center">
+  <img src="./_static/Full_Anti_Join.png" alt="Full Anti Join" width="1000"/>
+  <br>
+  <em>Full Anti Join</em>
+  </p>
+
+- The Syntax of FULL ANTI JOIN is :
+
+  ```sql
+
+  SELECT
+  *
+  FROM table1 as A
+  FULL JOIN table2 as B
+  ON A.key = B.key
+  WHERE A.key IS NULL OR B.key IS NULL
+
+  ```
+
+- **Ex** : Find customers without any orders and orders without any customers.
+
+  ```sql
+
+  SELECT 
+  *
+  FROM Customers as c
+  FULL JOIN Orders as o
+  ON c.id = o.customer_id
+  WHERE c.id IS NULL or o.customer_id IS NULL
+
+  ```
+
+- LEFT ANTI JOIN, RIGHT ANTI JOIN, FULL ANTI JOIN are generally used to check the existence of any data.
+
+## CROSS JOIN
+
+- CROSS JOIN combines every row from left table with every row from right table whcih means it is used to return all combinations of rows of left rtable with right table.
+
+- We might think there would be no use with CROSS JOIN. But we use it in some senarios as if you want to check all color combinations of your products then you CROSS JOIn products table with color table to get desired result.
+
+  <p align="center">
+  <img src="./_static/Cross_Join.png" alt="Cross Join" width="1000"/>
+  <br>
+  <em>Cross Join</em>
+  </p>
+
+- The Syntax of CROSS JOIN is :
+
+  ```sql
+
+  SELECT 
+  *
+  FROM table1
+  CROSS JOIN table2
+
+  ```
+
+- **Ex** : Find all combinations of customers with thier orders.
+
+  ```sql
+
+  SELECT 
+  *
+  FROM Customers
+  CROSS JOIN Orders
+
+  ```
+
+- **Note** : If you want to retrieve the matching rows then you use INNER JOIN. If you want to retrieve all the rows then two cases would arises. If you want to retireve all rows from one table then we use LEFT JOIN. If you want to retrieve all rows from both tables then we use FULL JOIN. In case of un matching rows also we have two cases. If you want to retireve un-matching rows from one table then we use LEFT ANTI JOIN. If you want to retrieve un matching rows from both tables then we use FULL ANTI JOIN. Using RIGHT JOIN or RIGHT ANTI JOIN is unnecessary as we can get the result of RIGHT JOIN by using LEFT JOIN also. So when you encounter a joins question, then convert that question into these 3 scenarios i.e Matching, All Rows, Un-Matching Rows. Once you have converted questions into these scenarios then we can simply write that join query. But mostly we can just use LEFT JOIN and FULL JOIN as we can implement INNER JOIN with LEFT JOIN + WHERE Clause. So most of the time we encounter LEFT JOIN only. IN Multi table joins also we encounter LEFT JOIN only.
