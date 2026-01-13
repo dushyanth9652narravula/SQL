@@ -19,7 +19,7 @@
 - In SQL, NO JOIN is returning the data from two tables without combining them. The basic syntax of NO JOIN is simply two select statements of both tables returning all the columns
 
   <p align="center">
-  <img src="./_static/No_join.png" alt="No Join" width="1000"/>
+  <img src="../_static/No_join.png" alt="No Join" width="1000"/>
   <br>
   <em>No Join</em>
   </p>
@@ -55,7 +55,7 @@
 - In INNER JOIN order of table doesn't matter. If you place left with right table and right with left table the output remains same.
 
   <p align="center">
-  <img src="./_static/Inner_join.png" alt="Inner Join" width="1000"/>
+  <img src="../_static/Inner_join.png" alt="Inner Join" width="1000"/>
   <br>
   <em>Inner Join</em>
   </p>
@@ -98,7 +98,7 @@
 - IN LEFT JOIN order of the table matters a lot. If you switch the order, the output would change.
 
   <p align="center">
-  <img src="./_static/Left_join.png" alt="Left Join" width="1000"/>
+  <img src="../_static/Left_join.png" alt="Left Join" width="1000"/>
   <br>
   <em>Left Join</em>
   </p>
@@ -141,7 +141,7 @@
 - In RIGHT JOIN also order of tables really matters. If you change the order, the output would change.
 
   <p align="center">
-  <img src="./_static/Right_join.png" alt="Right Join" width="1000"/>
+  <img src="../_static/Right_join.png" alt="Right Join" width="1000"/>
   <br>
   <em>Right Join</em>
   </p>
@@ -183,7 +183,7 @@
 - In FULL JOIN, the order of tables doesn't matter. As we are getting all rows from both tables then order of tables doesn't matter here.
 
   <p align="center">
-  <img src="./_static/Full_join.png" alt="Full Join" width="1000"/>
+  <img src="../_static/Full_join.png" alt="Full Join" width="1000"/>
   <br>
   <em>Full Join</em>
   </p>
@@ -224,7 +224,7 @@
 - We doesn't doesn't have any special keyword for left anti join. We use LEFT JOIN with WHERE Clause to get the result of LEFT ANTI JOIN.
 
   <p align="center">
-  <img src="./_static/Left_Anti_Join.png" alt="Left Anti Join" width="1000"/>
+  <img src="../_static/Left_Anti_Join.png" alt="Left Anti Join" width="1000"/>
   <br>
   <em>Left Anti Join</em>
   </p>
@@ -258,7 +258,7 @@
 - In SQL, RIGHT ANTI JOIN returns the rows from right table that have no matching in left table which we are getting unmatched rows of right table. This is simple opposite to LEFT ANTI JOIN. So we can get this result by just changing the positions of table in LEFT ANTI JOIN or we can use RIGHT JOIN with WHERE clause.
 
   <p align="center">
-  <img src="./_static/Right_Anti_Join.png" alt="Right Anti Join" width="1000"/>
+  <img src="../_static/Right_Anti_Join.png" alt="Right Anti Join" width="1000"/>
   <br>
   <em>Right Anti Join</em>
   </p>
@@ -294,7 +294,7 @@
 - We doesn't have any FULL ANTI JOIN clause in SQL. So we use FULL JOIN + WHERE Clause.
 
   <p align="center">
-  <img src="./_static/Full_Anti_Join.png" alt="Full Anti Join" width="1000"/>
+  <img src="../_static/Full_Anti_Join.png" alt="Full Anti Join" width="1000"/>
   <br>
   <em>Full Anti Join</em>
   </p>
@@ -334,7 +334,7 @@
 - We might think there would be no use with CROSS JOIN. But we use it in some senarios as if you want to check all color combinations of your products then you CROSS JOIn products table with color table to get desired result.
 
   <p align="center">
-  <img src="./_static/Cross_Join.png" alt="Cross Join" width="1000"/>
+  <img src="../_static/Cross_Join.png" alt="Cross Join" width="1000"/>
   <br>
   <em>Cross Join</em>
   </p>
