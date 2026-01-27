@@ -11,3 +11,4 @@ chapters:
   - file: 6_Combining_Data/01_Introduction_to_combining_data
     sections:
       - file: 6_Combining_Data/02_SQL_Joins
+      - file: 6_Combining_Data/03_SQL_Set_Operators
