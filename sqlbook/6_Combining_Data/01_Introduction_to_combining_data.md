@@ -1,6 +1,6 @@
 # Combining Data
 
-- Combining Data is nothing but combining two or more table to get all the data in one place. In real world data of a customer is spread into multiple tables. Such as all the personal inforamtion of a customer such as Name, Age, Country are in one table and Orders that customers made in anothor table and payments that customer made in anothor table etc. While performing the analytics, analysts need all the data at one place so that they can easily build dashboards by using that data. So we have to combine all the sql tables to make one master table.
+- Combining Data is nothing but combining two or more table to get all the data in one place. In real world, data of a customer is spread into multiple tables. Such as all the personal inforamtion of a customer such as Name, Age, Country are in one table and Orders that customers made in anothor table and payments that customer made in anothor table etc. While performing the analytics, analysts need all the data at one place so that they can easily build dashboards by using that data. So we have to combine all the sql tables to make one master table.
 
 - To combine the data, SQL provides two mechanism. Those are Combining tables using SQL JOINS and second one is combining tables using SET Operators.
 
