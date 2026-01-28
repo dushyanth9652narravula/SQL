@@ -12,3 +12,4 @@ chapters:
     sections:
       - file: 6_Combining_Data/02_SQL_Joins
       - file: 6_Combining_Data/03_SQL_Set_Operators
+  - file: 7_SQL_Functions/01_Introduction_to_SQL_Functions
