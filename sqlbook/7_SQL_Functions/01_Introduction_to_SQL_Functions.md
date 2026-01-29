@@ -1,4 +1,6 @@
-# Introduction to SQL Functions
+# SQL Functions
+
+## Introduction to SQL Functions
 
 - In real world, Data created by source systems never be cleaned most of the times. it would be messy such as text is standardized properly that means some values are in capitals and some are in small letters. Date values are wierd which means some data values are in string format and some are not in standard date format. If the data is actually like this then we cannot perform analysis on these data and even we perform analysis we might get incorrect results.
 
@@ -21,7 +23,7 @@
 - As we know SQL functions are two types which are Row Level Functions and Multi Row Functions. Single Row Functions are mainly used for data cleaning . Major Single Row Functions are String Functions, Number Functions, Date & Time Functions, NULL Functions etc. Multi Row Functions majorly used for Data analysis such as Aggregate Functions, Window Functions etc. 
 
   <p align="center">
-  <img src="../_static/Sql_functions.png" alt="Cross Join" width="1000"/>
+  <img src="../_static/Sql_functions.png" alt="SQL Functions Hierarchy" width="1000"/>
   <br>
-  <em>Cross Join</em>
+  <em>SQL Functions Hierarchy</em>
   </p>
