@@ -1,0 +1,850 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SQL Joins &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '6_Combining_Data/02_SQL_Joins';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SET Operators" href="03_SQL_Set_Operators.html" />
+    <link rel="prev" title="Combining Data" href="01_Introduction_to_combining_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../1_Introduction_to_SQL.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../1_Introduction_to_SQL.html">
+                    Introduction to SQL
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_Querying_Data.html">Querying the Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Data_Definition_Language.html">Data Definition Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Data_Manipulation_Language.html">Data Manipulation Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Filtering_Data.html">Filtering Data</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_Introduction_to_combining_data.html">Combining Data</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">SQL Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_SQL_Set_Operators.html">SET Operators</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../7_SQL_Functions/01_Introduction_to_SQL_Functions.html">SQL Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7_SQL_Functions/02_String_Functions.html">String Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7_SQL_Functions/03_Number_Functions.html">Number Functions</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F6_Combining_Data/02_SQL_Joins.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/6_Combining_Data/02_SQL_Joins.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>SQL Joins</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#no-join">NO JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-join">INNER JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-join">LEFT JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-join">RIGHT JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-join">FULL JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-anti-join">LEFT ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-anti-join">RIGHT ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-anti-join">FULL ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-join">CROSS JOIN</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="sql-joins">
+<h1>SQL Joins<a class="headerlink" href="#sql-joins" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>As we know SQL Joins are nothing but combining two or more tables column by column. In SQL joins, two tables have common column which is called as key column. When performing join on two tables, SQL first find the matching row in both tables based on key column and merge those two rows into one row by appending all the columns side by side. This is how a join actually occurs.</p></li>
+<li><p>SQL Joins are used in multiple usecases. It is used in <code class="docutils literal notranslate"><span class="pre">recombining</span> <span class="pre">all</span> <span class="pre">the</span> <span class="pre">data</span></code>. Sometimes analysts wants all data in one master table which can be easy to perform analysis and create dynamic dashboards. It is used to <code class="docutils literal notranslate"><span class="pre">enrich</span> <span class="pre">the</span> <span class="pre">data</span></code> we already have. Sometimes we actually want to add some columns to original table such as adding zip code information of country of the customers. In those cases we can just join those reference table with the original table. It is also used to <code class="docutils literal notranslate"><span class="pre">check</span> <span class="pre">the</span> <span class="pre">existence</span> <span class="pre">of</span> <span class="pre">particular</span> <span class="pre">data</span></code>. Suppose if you want to all the customers who didn’t even placed an order yet. In this case you just perform some type of join on customers and orders table then the result will show the customers who are not placed any order yet.</p></li>
+<li><p>To understand the joins clearly, assume the tables as circles. When you perform the joins three scenarios would arise. Those are</p>
+<p><strong>Matching Data</strong> : It is common data existed in two tables.</p>
+<p><strong>All Data</strong> : It would be all the data from two tables or all the data from any one table.</p>
+<p><strong>Un Matching Data</strong> : It is data exists in one table but not in anothor table.</p>
+</li>
+<li><p>Based on these three scenarios different types of Joins araised. Those are NO JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN, INNER JOIN, LEFT ANTI JOIN, RIGHT ANTI JOIN, FULL ANTI JOIN, CROSS JOIN.</p></li>
+</ul>
+<section id="no-join">
+<h2>NO JOIN<a class="headerlink" href="#no-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>In SQL, NO JOIN is returning the data from two tables without combining them. The basic syntax of NO JOIN is simply two select statements of both tables returning all the columns</p>
+<p align="center">
+<img src="../_static/No_join.png" alt="No Join" width="1000"/>
+<br>
+<em>No Join</em>
+</p>
+</li>
+<li><p><strong>Syntax</strong> :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table2</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Return all the data of customers and orders without combining them</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="inner-join">
+<h2>INNER JOIN<a class="headerlink" href="#inner-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>INNER JOIN actually returns all the matching rows from both the tables based on a common key column. It simply returns common data present in both the tables. INNER Join actually starts with key column value on left table and start finding match for the same key column value in right table. If any match found in right table then it will include in the output otherwise not. Like this it would search for entire table.</p></li>
+<li><p>In INNER JOIN order of table doesn’t matter. If you place left with right table and right with left table the output remains same.</p>
+<p align="center">
+<img src="../_static/Inner_join.png" alt="Inner Join" width="1000"/>
+<br>
+<em>Inner Join</em>
+</p>
+</li>
+<li><p><strong>Syntax</strong> :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Retrieve the customer id, customer name, order id and sales made by the customers.</p>
+<p>Here it is asked to retrieve the names and sales of the customers who placed an order.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+<span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">sales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+</pre></div>
+</div>
+</li>
+<li><p>INNER JOIN is actually used to get the combined data which is common in both tables or else it can be used to check the existence of the data. As in above example we have got the customer who placed at least one order.</p></li>
+</ul>
+</section>
+<section id="left-join">
+<h2>LEFT JOIN<a class="headerlink" href="#left-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>LEFT JOIN returns all the rows from the left table and matching rows from the right table. That means for LEFT JOIN, left table should be primary table and keep all the rows of it and right table is secondary table which is used as reference table to add extra information to left table by keeping only matching rows with the right table.</p></li>
+<li><p>IN LEFT JOIN order of the table matters a lot. If you switch the order, the output would change.</p>
+<p align="center">
+<img src="../_static/Left_join.png" alt="Left Join" width="1000"/>
+<br>
+<em>Left Join</em>
+</p>
+</li>
+<li><p>The basic Syntax of LEFT JOIN is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Retrieve the data of all customers and their orders including those without any orders</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+<span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">sales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+</pre></div>
+</div>
+</li>
+<li><p>In the above example, sql first make an empty table with 4 columns of id, first_name, order_id, and sales. Now it first keeps the id and first_name of first customer in customers table. Now it searches for matching id in the right table. If any customer_id present in order table matches with id in customers table then sql will keep respective order id and sales in the output. Oterwise it will keep them as NULL. This is how LEFT JOIN works.</p></li>
+<li><p>LEFT JOIN is mainly used to get combined data and it used for data enrichment also.</p></li>
+</ul>
+</section>
+<section id="right-join">
+<h2>RIGHT JOIN<a class="headerlink" href="#right-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>RIGHT JOIN is strictly opposite to the LEFT JOIN. It returns all the rows from the right table and the matching rows from the left table. That means for RIGHT JOIN, right table is the primary source of data and keeps all the rows from it and left table is the secondary table which is additional or reference table and keeps only the matching rows.</p></li>
+<li><p>In RIGHT JOIN also order of tables really matters. If you change the order, the output would change.</p>
+<p align="center">
+<img src="../_static/Right_join.png" alt="Right Join" width="1000"/>
+<br>
+<em>Right Join</em>
+</p>
+</li>
+<li><p>The basic syntax of RIGHT JOIN is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">RIGHT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Retireve all the customers along with thier order including orders without any customers.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+<span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">sales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">RIGHT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">on</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+</pre></div>
+</div>
+</li>
+<li><p>As we know RIGHT JOIN is strictly opposite to LEFT JOIN, so we can just switch the order of table s and perform LEFT JOIN itself instead of using RIGHT JOIN.</p></li>
+</ul>
+</section>
+<section id="full-join">
+<h2>FULL JOIN<a class="headerlink" href="#full-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>FULL JOIN generally keeps all the rows from both tables. I mean it keeps all the rows from left table and right table and matching rows also.</p></li>
+<li><p>In FULL JOIN, the order of tables doesn’t matter. As we are getting all rows from both tables then order of tables doesn’t matter here.</p>
+<p align="center">
+<img src="../_static/Full_join.png" alt="Full Join" width="1000"/>
+<br>
+<em>Full Join</em>
+</p>
+</li>
+<li><p>The syntax is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Retrieve all the customers and orders eventhough there is no match.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+<span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">sales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+</pre></div>
+</div>
+</li>
+<li><p>FULL JOIN is used to make a master table with all data from both the tables. It is also used to check existence but with one additional condition which we see in below joins.</p></li>
+</ul>
+</section>
+<section id="left-anti-join">
+<h2>LEFT ANTI JOIN<a class="headerlink" href="#left-anti-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>LEFT ANTI JOIN is LEFT JOIN with WHERE Filter. It actually returns the rows from the left table that has no match in right table which means we are getting unmatched data from left table.</p></li>
+<li><p>We doesn’t doesn’t have any special keyword for left anti join. We use LEFT JOIN with WHERE Clause to get the result of LEFT ANTI JOIN.</p>
+<p align="center">
+<img src="../_static/Left_Anti_Join.png" alt="Left Anti Join" width="1000"/>
+<br>
+<em>Left Anti Join</em>
+</p>
+</li>
+<li><p>The basic syntax is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Return the customers who are not placed any order.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="right-anti-join">
+<h2>RIGHT ANTI JOIN<a class="headerlink" href="#right-anti-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>In SQL, RIGHT ANTI JOIN returns the rows from right table that have no matching in left table which we are getting unmatched rows of right table. This is simple opposite to LEFT ANTI JOIN. So we can get this result by just changing the positions of table in LEFT ANTI JOIN or we can use RIGHT JOIN with WHERE clause.</p>
+<p align="center">
+<img src="../_static/Right_Anti_Join.png" alt="Right Anti Join" width="1000"/>
+<br>
+<em>Right Anti Join</em>
+</p>
+</li>
+<li><p>The basic syntax of RIGHT ANTI JOIN is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">RIGHT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Retrieve the orders which has no matching customers.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">RIGHT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="full-anti-join">
+<h2>FULL ANTI JOIN<a class="headerlink" href="#full-anti-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>FULL ANTI JOIN in SQL is used to returns all the unmatching rows from both tables which means it returns rows that doesn’t match either in both tables.</p></li>
+<li><p>We doesn’t have any FULL ANTI JOIN clause in SQL. So we use FULL JOIN + WHERE Clause.</p>
+<p align="center">
+<img src="../_static/Full_Anti_Join.png" alt="Full Anti Join" width="1000"/>
+<br>
+<em>Full Anti Join</em>
+</p>
+</li>
+<li><p>The Syntax of FULL ANTI JOIN is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">A</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Find customers without any orders and orders without any customers.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">c</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span>
+<span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</pre></div>
+</div>
+</li>
+<li><p>LEFT ANTI JOIN, RIGHT ANTI JOIN, FULL ANTI JOIN are generally used to check the existence of any data.</p></li>
+</ul>
+</section>
+<section id="cross-join">
+<h2>CROSS JOIN<a class="headerlink" href="#cross-join" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>CROSS JOIN combines every row from left table with every row from right table whcih means it is used to return all combinations of rows of left rtable with right table.</p></li>
+<li><p>We might think there would be no use with CROSS JOIN. But we use it in some senarios as if you want to check all color combinations of your products then you CROSS JOIn products table with color table to get desired result.</p>
+<p align="center">
+<img src="../_static/Cross_Join.png" alt="Cross Join" width="1000"/>
+<br>
+<em>Cross Join</em>
+</p>
+</li>
+<li><p>The Syntax of CROSS JOIN is :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span>
+<span class="k">CROSS</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Find all combinations of customers with thier orders.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span>
+<span class="k">CROSS</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Note</strong> : If you want to retrieve the matching rows then you use INNER JOIN. If you want to retrieve all the rows then two cases would arises. If you want to retireve all rows from one table then we use LEFT JOIN. If you want to retrieve all rows from both tables then we use FULL JOIN. In case of un matching rows also we have two cases. If you want to retireve un-matching rows from one table then we use LEFT ANTI JOIN. If you want to retrieve un matching rows from both tables then we use FULL ANTI JOIN. Using RIGHT JOIN or RIGHT ANTI JOIN is unnecessary as we can get the result of RIGHT JOIN by using LEFT JOIN also. So when you encounter a joins question, then convert that question into these 3 scenarios i.e Matching, All Rows, Un-Matching Rows. Once you have converted questions into these scenarios then we can simply write that join query. But mostly we can just use LEFT JOIN and FULL JOIN as we can implement INNER JOIN with LEFT JOIN + WHERE Clause. So most of the time we encounter LEFT JOIN only. IN Multi table joins also we encounter LEFT JOIN only.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./6_Combining_Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_Introduction_to_combining_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Combining Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_SQL_Set_Operators.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">SET Operators</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#no-join">NO JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-join">INNER JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-join">LEFT JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-join">RIGHT JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-join">FULL JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-anti-join">LEFT ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-anti-join">RIGHT ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-anti-join">FULL ANTI JOIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-join">CROSS JOIN</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
