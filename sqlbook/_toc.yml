@@ -16,3 +16,4 @@ chapters:
     sections:
       - file: 7_SQL_Functions/02_String_Functions
       - file: 7_SQL_Functions/03_Number_Functions
+      - file: 7_SQL_Functions/04_Date_and_Time_Functions.md
