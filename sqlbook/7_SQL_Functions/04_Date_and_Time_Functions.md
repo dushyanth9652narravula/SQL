@@ -361,3 +361,138 @@
   <br>
   <em>Comparisions of Casting and Formatting Functions</em>
   </p>
+
+
+## Date Calculation Functions
+
+### DATEADD Function
+
+- DATEADD() function is used tp add or subtracts dateparts from a particular Date value which means we can add or subtract days, months, years, weeks , hours, minutes, seconds and soon from the dates.
+
+- For Date type values we add or subtract days, months, years, week, quarter but we didn't add or subtract time from Date type values. We can add or subtract time related values then we can do it with DATETIME2 type.
+
+- **Syntax** : `DATEADD(datepart,interval,date)`
+
+  `DATEADD(day, 3, '2025-03-12')` -> It adds 3 days to this date and returns `2025-03-15` as output.
+
+- DATEADD() supports all kinds of dateparts that are supported by DATEPART, DATENAME and DATETRUNC etc except iso_week.
+
+- **Ex** : Add 5 months to the order date to finds the sales after 5 months.
+
+  ```sql
+
+  SELECT
+  OrderDate,
+  DATEADD(month, 5, OrderDate) as AfterFiveMonths,
+  DATEADD(day, 15, OrderDate) as AfterFifteenDays,
+  DATEADD(year, -2, OrderDate) as BeforeTwoYears
+  FROM Sales.Orders
+
+  ```
+
+- **Ex** : Add 12 hours to the Customers Order CreationTime
+
+  ```sql
+
+  SELECT
+  CreationTime,
+  DATEADD(hour, 12, CreationTime) as TwelveHoursAfter
+  FROM Sales.Orders
+
+  ```
+
+### DATEDIFF Function
+
+- DATEDIFF() function is used to find the datepart difference between a startdate and enddate. This means we can find the no of years, month, days, weeks, hours, minutes between two dates.
+
+- **Syntax** : `DATEDIFF(datepart, startdate, enddate)`
+
+- `DATEDIFF(hour,2025-12-23,2025-12-24 06:25:33)` results 30 hours. Because if you give date only instead of datetime then it considers that date as date 00:00:00. Here it considers 2025-12-23 as 2025-12-23 00:00:00 .
+
+- **Ex** :
+
+  ```sql
+
+  SELECT
+  OrderDate,
+  CreationTime,
+  DATEADD(hour,12,CreationTime),
+  DATEDIFF(hour,OrderDate, DATEADD(hour, 12, CreationTime))
+  FROM Sales.Orders
+
+  ```
+
+- **Ex** : Find the age of the employees
+
+  ```sql
+
+  SELECT
+  EmployeeId,
+  BirthDate,
+  DATEDIFF(year, BirthDate,GETDATE()) as Age
+  FROM Sales.Employees
+
+  ```
+
+- **Ex** : Find the number of days taken by comapany to ship an order
+
+  ```sql
+
+  SELECT
+  OrderID,
+  OrderDate,
+  ShipDate,
+  DATEDIFF(day,OrderDate, ShipDate) as ShippingDays
+  FROM Sales.Orders
+
+  ```
+
+- **Ex** : Find the no of days between current order and previous order
+
+  ```sql
+
+  SELECT
+  o.OrderID as PreviousOrderID,
+  t.OrderID as CurrentOrderID,
+  o.OrderDate as PreviousOrderDate,
+  t.OrderDate as CurrentOrderDate,
+  DATEDIFF(day,o.OrderDate,t.OrderDate) as DayGap
+  FROM Sales.Orders as o, Sales.Orders as t
+  WHERE (o.OrderID = 1 AND t.OrderID = 1) OR o.OrderID = t.OrderID - 1
+
+  ```
+
+## Date Validation Function
+
+### ISDATE Function
+
+- ISDATE() function is used to check whether given date is valid date or not. If it is valid date then it returns 1 else it returns 0. According to documentation, SQL Server actually detects the years after 1753 as valid dates and before that it doesn't detect them as valid date. But DateTime2 and DATE data types stores years starting from 0 . And ISDATE() return true if it the date is ISO format only.
+
+- **Syntax** : `ISDATE(value)`
+
+- Generally ISDATE() function is commonly used to check string formatted dates. Because most of the date formats comming from the databases or applications or apis might be stored in form of strings. So we usually use ISDATE with varchar/nvarchar types only.
+
+- It is used for data validation. When you are performing data cleaning and you want to standarize the dates then you first check whether the values are suitable for converting dates or not if yes then cast as dates else we keep it as NULL or keep dummy variables instead of them.
+
+- **Ex** : Validate the OrderDate by casting them as date if possible else fill it up with Null
+
+  ```sql
+
+    SELECT
+    OrderDate,
+    ISDATE(OrderDate) as flag,
+    CASE WHEN ISDATE(OrderDate) = 1 THEN CAST(OrderDate as Date) END as  NewOrderDate
+    FROM
+    (
+      SELECT '2025-08-20' As OrderDate UNION ALL
+	    SELECT '2025-08-21' UNION ALL
+	    SELECT '2025-08-23' UNION ALL
+	    SELECT '2025-08'
+    ) as t
+
+  ```
+
+  
+
+
+  
