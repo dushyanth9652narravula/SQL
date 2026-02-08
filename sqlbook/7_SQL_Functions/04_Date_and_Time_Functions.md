@@ -16,7 +16,7 @@
   <em>Date and Time Functions</em>
   </p>
 
-## Date Extraction Functions
+## Date Part Extraction Functions
 
 ### DAY, MONTH, YEAR Functions
 
@@ -132,3 +132,232 @@
   FROM Sales.Orders
 
   ```
+
+### Usecases of Date Extraction Functions
+
+- **Data Aggregations and Reporting** : Date Extraction Functions are majorly used to perform aggregations by year, month or days and generate reports based on that aggregations. For example, if you want to get sales of each year, then we have extract year part from the orderdate and then perform groupby on top of the year part then we get sales for each year. Similarly it can be used to get how many orders placed in each month, year etc.
+
+  **Ex** : Find no of orders placed in each month of every year.
+
+  ```sql
+  
+  SELECT
+  Year,
+  Month,
+  No_of_Orders
+  FROM 
+  (
+    SELECT 
+    YEAR(OrderDate) as Year,
+    DATENAME(month,OrderDate) as month,
+    Month(OrderDate) as Monthnum,
+    Count(*) as No_of_Orders
+    FROM Sales.Orders
+    GROUP BY Year(OrderDate), DATENAME(month,OrderDate), Month(OrderDate)
+
+    UNION ALL
+
+    SELECT
+    YEAR(OrderDate) as Year,
+    DATENAME(month,OrderDate) as month,
+    Month(OrderDate) as Monthnum,
+    Count(*)
+    GROUP BY Year(OrderDate), DATENAME(month,OrderDate), Month(OrderDate)
+  ) t
+  ORDER BY Year Asc, Monthnum ASC
+
+  ```
+
+- **Date FIltering** : Date Part Extraction functions are also used in cases of Data Filtering situations. Suppose if you want to filter the Orders placed in the month of febraury then first we need to extract the month part from it and then we need to used it in WHERE Clause. In these type of cases we can use Date Part Extraction Functions.
+
+  **Ex** : Get all the orders which are placed in the month of february.
+
+  ```sql
+
+  SELECT
+  *
+  FROM Sales.Orders
+  WHERE Month(OrderDate) = 2
+
+  UNION ALL
+
+  SELECT
+  *
+  FROM Sales.OrdersArchive
+  WHERE Month(OrderDate) = 2
+
+  ```
+
+  **Note** : When you filtering the data, try to filter the data using integers instead of strings as integer comparisions are faster than string comparisions. This is the reason why i have used the Month() function instead of DateName() function for comparision.
+
+### Comaprisions of All Date Part Extraction Functions
+
+- The Ouput of each date part extraction functions are :
+
+  1. DAY(), YEAR(), MONTH(), DATEPART() - Integer
+  2. DATENAME() - String
+  3. DATETRUNC() - DateTime
+  4. EOMONTH() - Date
+
+- Generally we have doubts when to use which functions. It depends on the type of part you want day, month and if you want them as numeric values then we use DAY(), MONTH() or if you want them as Strings then we use DATENAME(). If you want year part then we use YEAR() function as year has no name, so we can't use DATENAME() function. If you want any other parts of date, then we can use DATEPART() function.
+
+  <p align="center">
+  <img src="../_static/DatePartFunctions.png" alt="Date Part Extraction Functions Decison" width="1000"/>
+  <br>
+  <em>Decision of Date Part Extraction Functions</em>
+  </p>
+
+- The Date Parts present in sql are 
+
+  <p align="center">
+  <img src="../_static/DateParts.png" alt="Date Parts" width="1000"/>
+  <br>
+  <em>Date Parts</em>
+  </p>
+
+## Date Formatting and Casting Functions
+
+### Introduction to Fomatting and Casting
+
+- Before to going to see how we format the dates in sql, lets the different formats we used to represent the dates in real world. Generally in sql server, a date can be represented by using the following format `yyyy-MM-dd HH:mm:ss` which is International Standard Format (ISO) where captial M represents months and small m represents minutes. We have other formats such as `MM-dd-YYYY` or `MM-dd-YY` or `MMM-YYYY` (Aug 2025) these are the formats used as standard date formats in USA. Whereas europe uses `dd-MM-YYYY` as standard format for representing the dates.
+
+- Generally to change the format date, SQL Server uses FORMAT() function. This function takes the type of format as input and converts the date into that format. For example you want to convert the date `2025-08-20` to `MM/dd/yy` then it gives `08/20/25` as output. Similary for `MMM YYY`, it gives `Aug 2025` as output. This FORMAT() can be used to format the numeric data types and strings also.
+
+- We have another function to format the date which is CONVERT(). CONVERT() function takes the style code as input and coverts the date to format that represented by the style code.  If ypu give 6 as style code, then it convets above mentioned date to `20 Aug 25` etc.
+
+- SQL use CAST() or CONVERT() function to convert one data type to anothor data type. 
+
+
+### FORMAT Function
+
+- Format() function can be used to format dates, numbers into preffered format we want. The basic sybtax of FORMAT() function is : `FORMAT(value, Format, [, culture])`. Here value can be date or number and culture parameter can be optional. Culture parameter to used to provide the style of country. Suppose if you want japan style then we use `ja-JP`. By default it is USA format which is `en-US`. 
+
+- **Ex** : Format the OrderDate to get days and month in different format and also format it to usa and europe formats
+
+  ```sql
+
+  SELECT
+  OrderDate,
+  FORMAT(OrderDate, 'MM-dd-yyyy') as USA_Format,
+  FORMAT(OrderDate, 'dd-MM-yyyy') as Euro_Format,
+  FORMAT(OrderDate, 'dd') as dd,
+  FORMAT(OrderDate, 'ddd') as ddd,
+  FORMAT(OrderDate, 'dddd') as dddd,
+  FORMAT(OrderDate, 'MM') as MM,
+  FORMAT(OrderDate, 'MMM') as MMM,
+  FORMAT(OrderDate, 'MMM') as MMMM
+  FROM Sales.Orders
+  
+  ```
+
+- **Ex** : Convert the orderdate to custom date i.e `Day Wed Jan Q1 2025 12:41:56 PM`
+
+  ```sql
+
+  SELECT
+  CreationTime,
+  'Day ' + Format(CreationTime, 'ddd MMM ') +
+  'Q' + DATENAME(quarter,CreationTime) + Format(CreationTime, ' yyyy hh:mm:ss tt')
+  FROM Sales.Orders
+
+  ```
+
+- This FORMAT() function can be used in many usecases. Those are :
+
+  **Data Aggregations** : Sometimes we want to show monthly sales as 'Jan 2025' format in reports. Inorder to get this format then we have to first convert the date into that format and perform aggregations. For this we need to use this FORMAT() function.
+
+  ```sql
+
+  SELECT
+  FORMAT(OrderDate, 'MMM yyyy') as OrderDate,
+  COUNT(*) as No_of_Orders
+  FROM Sales.Orders
+  GROUP BY FORMAt(OrderDate, 'MMM yyyy')
+
+  ```
+
+  **Data Standardization** : In real world scenarios, we might get data from different source systems such as APIs, databases, csv files etc where data might be stored in different formats. Such as date from APIs might be in `dd-MM-yy` format, databases might be `MM-dd-yyyy` format and csv files might be `dd/MM/yyyy` format. When we are moving all these data into centralized database then we have to clean and standardize these dates into one format and stored it in the centralized database.
+
+- Some Date and Time Format Specifiers are:
+
+  <p align="center">
+  <img src="../_static/Date_and_Time_Format_Specifiers.png" alt="Date And Time Format Specifiers" width="1000"/>
+  <br>
+  <em>Date and Time Format Specifiers</em>
+  </p>
+
+- Some Number Format Specifiers are:
+
+  <p align="center">
+  <img src="../_static/Number_Format_Specifiers.png" alt="Number Format Specifiers" width="1000"/>
+  <br>
+  <em>Number Format Specifiers</em>
+  </p>
+
+### CONVERT Function
+
+- CONVERT() function is majorly used to convert the data type of a value from one type to anothor type and it also used to format that value. The basic syntax of the CONVERT() function is:
+
+  **Syntax** : `CONVERT(datatype, value, [,style])`
+
+- In the above syntax, style could be optional. Generally it is code which is used to format the date, time and datetime values or any other datatypes. The general style codes used in convert function are shown below.
+
+  <p align="center">
+  <img src="../_static/StyleCodes.png" alt="Style Codes" width="1000"/>
+  <br>
+  <em>Style Codes</em>
+  </p>
+
+- **Ex** : Convert the CreationTime to Date type and format the creationtime to USA and european format
+
+  ```sql
+
+  SELECT
+  CreationTime,
+  CONVERT(date, CreationTime) as CreationTime_date,
+  CONVERT(VARCHAR,CreationTime,32) as USA_format,
+  CONVERT(VARCHAR,CreationTime, 34) as Euro_format
+  FROM Sales.Orders
+
+  ```
+
+- **Note** : Formatting has meaning when it type of value that you are formatting is string. Suppose if you first convert the CreationTime to date and then applied style code as 32 to change it to USA Format then it doesn't change it usa format instead it ignores the syle code and keeps date as its. So here it does only casting and it doesn't do formatting. So CONVERT() function is only formats the strings to values to specified format.
+
+### CAST Function
+
+- CAST() function is used to convert any data type to any data type if it is compatible. The basic syntax of CAST() function is :
+
+  **Syntax** : `CAST(value As Data_Type)`
+
+- **Ex** : 
+
+  ```sql
+
+  SELECT
+  CAST('123' AS Int) AS String_to_Int,
+  CAST(123 AS VARCHAR) AS Int_to_String,
+  CAST('2025-12-23' AS date) As String_to_Date,
+  CAST('2025-12-23' AS datetime2)  AS String_to_DateTime
+
+  ```
+
+- **Ex** : Convert Custoemrs Order CreationTime to Date 
+
+  ```sql
+
+  SELECT
+  CreationTime,
+  CAST(CreationTime AS Date) As CreationTime_to_Date
+  FROM Sales.Orders
+
+  ```
+
+### Comparision of Formatting and Casting Functions
+
+- CAST() function is mainly used to convert any type of data to any other type. It cannot do formatting. Whereas CONVERT() function is used tp convert any type of data to any other type of data and can also format the date and time data. I mean if Style parameter is given then the value must be in VARCHAR type and it formats that VARCHAR to any date or time formats which automatically implies if value in the form of VARCHAR must be date or datetime only. Then only it is compatible with style code. If formatting data is not VARCHAR then CONVERT() doesn't perform formatting just does type casting and ignores style parameter. FORMAT() function always returns a string value which means it converts anytype of data to string only and it does formatting for both date, datetime and Numbers also.
+
+  <p align="center">
+  <img src="../_static/Comparision_of_Casting_and_Formatting_Functions.png" alt="Comaprision Of Casting and Formatting Functions" width="1000"/>
+  <br>
+  <em>Comparisions of Casting and Formatting Functions</em>
+  </p>
