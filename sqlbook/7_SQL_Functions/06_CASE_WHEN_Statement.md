@@ -2,7 +2,7 @@
 
 ## Introduction to CASE WHEN Statement
 
-- CASE WHEN Statement introduces a conditional logic to SQL which produces results based on particular conditions met. It evaluate all the conditions and retirns corresponding value when first condition met. This conditional logic starts with keyword called `CASE` and end with a keyword called `END`. In between these two keywords we writes our conditional logic using WHEN THEN and ELSE keywords. The syntax of CASE WHEN is shown in the following image.
+- CASE WHEN Statement introduces a conditional logic to SQL which produces results based on particular conditions met. It evaluate all the conditions and returns corresponding value when first condition met. This conditional logic starts with keyword called `CASE` and end with a keyword called `END`. In between these two keywords we writes our conditional logic using WHEN THEN and ELSE keywords. The syntax of CASE WHEN is shown in the following image.
 
   <p align="center">
   <img src="../_static/CASE_WHEN.png" alt="CASE WHEN Statement" width="1000"/>
