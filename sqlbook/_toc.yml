@@ -21,3 +21,4 @@ chapters:
       - file: 7_SQL_Functions/06_CASE_WHEN_Statement
       - file: 7_SQL_Functions/07_Basics_of_window_functions
       - file: 7_SQL_Functions/08_Window_Aggregate_Functions
+      - file: 7_SQL_Functions/09_Window_Ranking_Functions
