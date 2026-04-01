@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Date and Time Functions &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '7_SQL_Functions/04_Date_and_Time_Functions';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NULL Functions" href="05_Null_Functions.html" />
+    <link rel="prev" title="Number Functions" href="03_Number_Functions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../1_Introduction_to_SQL.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../1_Introduction_to_SQL.html">
+                    Introduction to SQL
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_Querying_Data.html">Querying the Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Data_Definition_Language.html">Data Definition Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Data_Manipulation_Language.html">Data Manipulation Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Filtering_Data.html">Filtering Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../6_Combining_Data/01_Introduction_to_combining_data.html">Combining Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6_Combining_Data/02_SQL_Joins.html">SQL Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6_Combining_Data/03_SQL_Set_Operators.html">SET Operators</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_Introduction_to_SQL_Functions.html">SQL Functions</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="02_String_Functions.html">String Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Number_Functions.html">Number Functions</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Date and Time Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_Null_Functions.html">NULL Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_CASE_WHEN_Statement.html">CASE WHEN Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_Basics_of_window_functions.html">Basics of Window Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_Window_Aggregate_Functions.html">Window Aggregate Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_Window_Ranking_Functions.html">Window Ranking Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_Window_Value_Functions.html">Window Value Functions</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F7_SQL_Functions/04_Date_and_Time_Functions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/7_SQL_Functions/04_Date_and_Time_Functions.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Date and Time Functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-part-extraction-functions">Date Part Extraction Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-month-year-functions">DAY, MONTH, YEAR Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datepart-function">DATEPART Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datename-function">DATENAME Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datetrunc-function">DATETRUNC Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eomonth-function">EOMONTH Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usecases-of-date-extraction-functions">Usecases of Date Extraction Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comaprisions-of-all-date-part-extraction-functions">Comaprisions of All Date Part Extraction Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-formatting-and-casting-functions">Date Formatting and Casting Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-fomatting-and-casting">Introduction to Fomatting and Casting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-function">FORMAT Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-function">CONVERT Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cast-function">CAST Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparision-of-formatting-and-casting-functions">Comparision of Formatting and Casting Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-calculation-functions">Date Calculation Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dateadd-function">DATEADD Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datediff-function">DATEDIFF Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-validation-function">Date Validation Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isdate-function">ISDATE Function</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="date-and-time-functions">
+<h1>Date and Time Functions<a class="headerlink" href="#date-and-time-functions" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>A Date in SQL represents a date particular event happened such as birthday, project deadline or order placed day etc. The date format in SQL contains 3 components. Those are year, month and day. Month is in the range of 0 to 12 and day is in range of 1 to 31 depending upon the month. So format is <code class="docutils literal notranslate"><span class="pre">year-month-day</span></code>. Example for date is <code class="docutils literal notranslate"><span class="pre">2025-04-12</span></code>.</p></li>
+<li><p>Time in SQL represents a specific point within a day. It also consists of 3 components. Those are hour, minutes, seconds. Hour ranges from 0 to 23, minutes and seconds ranges from 0 to 59. Fromat of time is <code class="docutils literal notranslate"><span class="pre">hour-minutes-seconds</span></code>. Example for time is <code class="docutils literal notranslate"><span class="pre">18:25:46</span></code>.</p></li>
+<li><p>There is anothor data type in SQL which is called as Timestamp (in PostgreSQL, MySQL, Oracle) or datetime (in SQL Server) which is combination of date and time which represents exact time and date an event happened. Example for timestamp or datetime is <code class="docutils literal notranslate"><span class="pre">2025-04-12</span> <span class="pre">18:25:46</span></code>.</p></li>
+<li><p>As we know what date and time is, now lets see what operations we can perform on date and time. We can majorly perform 4 different types of operations on date and time. We can extracts the parts of the date such as year, month, day, format the date or time in different formats, perform so calculations on date such as addition of two dates or finding the difference between two dates etc and validate the data in sql such as checking particular date is valid or not. Based on these we can divide the date and time functions into four categories such as Extraction, Format &amp; Casting, Calculations and Validation which is shown in below image.</p>
+<p align="center">
+<img src="../_static/date_and_timefunctions.png" alt="Date and Time Functions" width="1000"/>
+<br>
+<em>Date and Time Functions</em>
+</p>
+</li>
+</ul>
+</section>
+<section id="date-part-extraction-functions">
+<h2>Date Part Extraction Functions<a class="headerlink" href="#date-part-extraction-functions" title="Link to this heading">#</a></h2>
+<section id="day-month-year-functions">
+<h3>DAY, MONTH, YEAR Functions<a class="headerlink" href="#day-month-year-functions" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DAY() function is used to extract day from the date, MONTH() function is used to extract month from the date and YEAR() function is used to extract year from the date. Input can be date or datetime. The basic syntax of three functions is <code class="docutils literal notranslate"><span class="pre">func(&lt;date&gt;)</span></code>. Here func can be anyone of DAY(), YEAR() or MONTH().</p></li>
+<li><p><strong>Ex</strong> : Extract the DAY, Month and year of the a customer’s order.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="k">DAY</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Day</span><span class="p">,</span>
+<span class="k">MONTH</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Month</span><span class="p">,</span>
+<span class="k">YEAR</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Year</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="datepart-function">
+<h3>DATEPART Function<a class="headerlink" href="#datepart-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DATEPART() function in SQL is used to return the specific parts of a DATE as an integer. It can be year, month, day, quarter (1 to 4), dayofyear (1 to 366), week ( week number in year : 1 to 52), weekday (day of the week mean Sunday-1, Monday-2 etc), hour, minute, second, millisecond etc. Anyway it would return all parts as an integer only</p></li>
+<li><p>Basic syntax of DATEPART() is <code class="docutils literal notranslate"><span class="pre">DATEPART(&lt;datepart&gt;,&lt;date&gt;)</span></code>.</p></li>
+<li><p><strong>Ex</strong> : Extract all possible parts from Customers Order CreationTime.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="k">day</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">day_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">month_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">year_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="n">quarter</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">quarter_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="n">week</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">week_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="n">weekday</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">weekday_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="n">dayofyear</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">dayofyear_dp</span><span class="p">,</span>
+<span class="n">DATEPART</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">hour_dp</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="datename-function">
+<h3>DATENAME Function<a class="headerlink" href="#datename-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DATENAME() function is used to return the specific parts of the date as string. That means we can return day, month, year, week, weekday, dayofyear, hour, minute, second as string. Since we have names for month and weekday only such as August, Monday and all other doesn’t have any name so we get values but stored as string.</p></li>
+<li><p>Basic Syntax of DATENAME() function is <code class="docutils literal notranslate"><span class="pre">DATENAME(part,date)</span></code>.</p></li>
+<li><p><strong>Ex</strong> : Extract Month and weekday name from Customers Order CreationTime.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderId</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">DATENAME</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">month_dn</span><span class="p">,</span>
+<span class="n">DATENAME</span><span class="p">(</span><span class="n">weekday</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">weekday_dn</span><span class="p">,</span>
+<span class="n">DATENAME</span><span class="p">(</span><span class="k">year</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">year_dn</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="datetrunc-function">
+<h3>DATETRUNC Function<a class="headerlink" href="#datetrunc-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DATETRUNC() function is used to extract the data information upto certain level and return output in datetine format itself. As we know, datetime format has multiple levels but majorly we see six levels. Those are year, month, day, hour, minutes, seconds. Suppose if you want the datetime upto just minute level then DATETRUNC make seconds to 00 and keep until minute level only.</p></li>
+<li><p>For example, we have datetime value as <code class="docutils literal notranslate"><span class="pre">2025-04-12</span> <span class="pre">18:25:46</span></code> and you want only until minute level then DATETRUNC makes seconds as 00 and returns <code class="docutils literal notranslate"><span class="pre">2025-04-12</span> <span class="pre">18:25:00</span></code> as output. If you want hour level then it returns <code class="docutils literal notranslate"><span class="pre">2025-04-12</span> <span class="pre">18:00:00</span></code>. If you want day level then it returns <code class="docutils literal notranslate"><span class="pre">2025-04-01</span> <span class="pre">00:00:00</span></code>. If you want month level then puts 01 in place any day to make it start of the month and returns <code class="docutils literal notranslate"><span class="pre">2025-04-01</span> <span class="pre">00:00:00</span></code>. If you want year level then it makes month as 01 which starting month of the year and returns <code class="docutils literal notranslate"><span class="pre">2025-01-01</span> <span class="pre">00:00:00</span></code>. So DATETRUNC actually takes smallest level parts based on the level you mentioned and makes those parts to its minimum values as we know the minum values of hours, minutes, seconds are 00 and month, day are 01.</p></li>
+<li><p>Basic Syntax of DATETRUNC is - <code class="docutils literal notranslate"><span class="pre">DATETRUNC(&lt;part&gt;,&lt;date&gt;)</span></code>. Here part can be year, month, day, hour, minute, seconds etc.</p></li>
+<li><p><strong>Ex</strong> : Extract the day level info Customers order Creationtime.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderId</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">DATETRUNC</span><span class="p">(</span><span class="k">day</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">day_tr</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p>These DATETRUNC() function are majorly used to perform the aggregation and analytics tasks. Suppose you have only Order creation time only and you want to know how many orders we got each month in this year then how can we get that one by truncating the date to month level and perfrom aggregations by using group by.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">DATETRUNC</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">month_tr</span><span class="p">,</span>
+<span class="k">Count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">DATETRUNC</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Note</strong> : DATETRUNC() only pushes to period boundaries if that datepart represents period in a year. If you see dayofyear is not a period in a single year. It just represents the ordinal number or label inside a year which is current day from start of the year such as 80th day in this year etc. So it maynot used in DATETRUNC() as it behaves like day in DATETRUNC() as period is that day iteself. It just used in date extraction part like DATEPART() function to acesses the seasonal trends in sales etc.</p></li>
+</ul>
+</section>
+<section id="eomonth-function">
+<h3>EOMONTH Function<a class="headerlink" href="#eomonth-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>EOMONTH() function returns the end data of the month as output. Suppose if you date is <code class="docutils literal notranslate"><span class="pre">2025-06-12</span></code> then EOMONTH() function returns the <code class="docutils literal notranslate"><span class="pre">2025-06-30</span></code> as output.</p></li>
+<li><p>Basic syntax of EOMONTH() is <code class="docutils literal notranslate"><span class="pre">EOMONTH(&lt;date&gt;)</span></code>.</p></li>
+<li><p><strong>Ex</strong> : Get the End of the Month for each customers order creationtime.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">EOMONTH</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Endofmonth</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="usecases-of-date-extraction-functions">
+<h3>Usecases of Date Extraction Functions<a class="headerlink" href="#usecases-of-date-extraction-functions" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Data Aggregations and Reporting</strong> : Date Extraction Functions are majorly used to perform aggregations by year, month or days and generate reports based on that aggregations. For example, if you want to get sales of each year, then we have extract year part from the orderdate and then perform groupby on top of the year part then we get sales for each year. Similarly it can be used to get how many orders placed in each month, year etc.</p>
+<p><strong>Ex</strong> : Find no of orders placed in each month of every year.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">Year</span><span class="p">,</span>
+<span class="k">Month</span><span class="p">,</span>
+<span class="n">No_of_Orders</span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span>
+<span class="w">  </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Year</span><span class="p">,</span>
+<span class="w">  </span><span class="n">DATENAME</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">month</span><span class="p">,</span>
+<span class="w">  </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Monthnum</span><span class="p">,</span>
+<span class="w">  </span><span class="k">Count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">No_of_Orders</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+<span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">Year</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">),</span><span class="w"> </span><span class="n">DATENAME</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">),</span><span class="w"> </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+
+<span class="w">  </span><span class="k">SELECT</span>
+<span class="w">  </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Year</span><span class="p">,</span>
+<span class="w">  </span><span class="n">DATENAME</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">month</span><span class="p">,</span>
+<span class="w">  </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Monthnum</span><span class="p">,</span>
+<span class="w">  </span><span class="k">Count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">Year</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">),</span><span class="w"> </span><span class="n">DATENAME</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">),</span><span class="w"> </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">t</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">Year</span><span class="w"> </span><span class="k">Asc</span><span class="p">,</span><span class="w"> </span><span class="n">Monthnum</span><span class="w"> </span><span class="k">ASC</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Date FIltering</strong> : Date Part Extraction functions are also used in cases of Data Filtering situations. Suppose if you want to filter the Orders placed in the month of febraury then first we need to extract the month part from it and then we need to used it in WHERE Clause. In these type of cases we can use Date Part Extraction Functions.</p>
+<p><strong>Ex</strong> : Get all the orders which are placed in the month of february.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+
+<span class="k">SELECT</span>
+<span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">OrdersArchive</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">Month</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+</pre></div>
+</div>
+<p><strong>Note</strong> : When you filtering the data, try to filter the data using integers instead of strings as integer comparisions are faster than string comparisions. This is the reason why i have used the Month() function instead of DateName() function for comparision.</p>
+</li>
+</ul>
+</section>
+<section id="comaprisions-of-all-date-part-extraction-functions">
+<h3>Comaprisions of All Date Part Extraction Functions<a class="headerlink" href="#comaprisions-of-all-date-part-extraction-functions" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>The Ouput of each date part extraction functions are :</p>
+<ol class="arabic simple">
+<li><p>DAY(), YEAR(), MONTH(), DATEPART() - Integer</p></li>
+<li><p>DATENAME() - String</p></li>
+<li><p>DATETRUNC() - DateTime</p></li>
+<li><p>EOMONTH() - Date</p></li>
+</ol>
+</li>
+<li><p>Generally we have doubts when to use which functions. It depends on the type of part you want day, month and if you want them as numeric values then we use DAY(), MONTH() or if you want them as Strings then we use DATENAME(). If you want year part then we use YEAR() function as year has no name, so we can’t use DATENAME() function. If you want any other parts of date, then we can use DATEPART() function.</p>
+<p align="center">
+<img src="../_static/DatePartFunctions.png" alt="Date Part Extraction Functions Decison" width="1000"/>
+<br>
+<em>Decision of Date Part Extraction Functions</em>
+</p>
+</li>
+<li><p>The Date Parts present in sql are</p>
+<p align="center">
+<img src="../_static/DateParts.png" alt="Date Parts" width="1000"/>
+<br>
+<em>Date Parts</em>
+</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="date-formatting-and-casting-functions">
+<h2>Date Formatting and Casting Functions<a class="headerlink" href="#date-formatting-and-casting-functions" title="Link to this heading">#</a></h2>
+<section id="introduction-to-fomatting-and-casting">
+<h3>Introduction to Fomatting and Casting<a class="headerlink" href="#introduction-to-fomatting-and-casting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Before to going to see how we format the dates in sql, lets the different formats we used to represent the dates in real world. Generally in sql server, a date can be represented by using the following format <code class="docutils literal notranslate"><span class="pre">yyyy-MM-dd</span> <span class="pre">HH:mm:ss</span></code> which is International Standard Format (ISO) where captial M represents months and small m represents minutes. We have other formats such as <code class="docutils literal notranslate"><span class="pre">MM-dd-YYYY</span></code> or <code class="docutils literal notranslate"><span class="pre">MM-dd-YY</span></code> or <code class="docutils literal notranslate"><span class="pre">MMM-YYYY</span></code> (Aug 2025) these are the formats used as standard date formats in USA. Whereas europe uses <code class="docutils literal notranslate"><span class="pre">dd-MM-YYYY</span></code> as standard format for representing the dates.</p></li>
+<li><p>Generally to change the format date, SQL Server uses FORMAT() function. This function takes the type of format as input and converts the date into that format. For example you want to convert the date <code class="docutils literal notranslate"><span class="pre">2025-08-20</span></code> to <code class="docutils literal notranslate"><span class="pre">MM/dd/yy</span></code> then it gives <code class="docutils literal notranslate"><span class="pre">08/20/25</span></code> as output. Similary for <code class="docutils literal notranslate"><span class="pre">MMM</span> <span class="pre">YYY</span></code>, it gives <code class="docutils literal notranslate"><span class="pre">Aug</span> <span class="pre">2025</span></code> as output. This FORMAT() can be used to format the numeric data types and strings also.</p></li>
+<li><p>We have another function to format the date which is CONVERT(). CONVERT() function takes the style code as input and coverts the date to format that represented by the style code.  If ypu give 6 as style code, then it convets above mentioned date to <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">Aug</span> <span class="pre">25</span></code> etc.</p></li>
+<li><p>SQL use CAST() or CONVERT() function to convert one data type to anothor data type.</p></li>
+</ul>
+</section>
+<section id="format-function">
+<h3>FORMAT Function<a class="headerlink" href="#format-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Format() function can be used to format dates, numbers into preffered format we want. The basic sybtax of FORMAT() function is : <code class="docutils literal notranslate"><span class="pre">FORMAT(value,</span> <span class="pre">Format,</span> <span class="pre">[,</span> <span class="pre">culture])</span></code>. Here value can be date or number and culture parameter can be optional. Culture parameter to used to provide the style of country. Suppose if you want japan style then we use <code class="docutils literal notranslate"><span class="pre">ja-JP</span></code>. By default it is USA format which is <code class="docutils literal notranslate"><span class="pre">en-US</span></code>.</p></li>
+<li><p><strong>Ex</strong> : Format the OrderDate to get days and month in different format and also format it to usa and europe formats</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MM-dd-yyyy&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">USA_Format</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dd-MM-yyyy&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Euro_Format</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dd&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">dd</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ddd&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ddd</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dddd&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">dddd</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MM&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MM</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MMM&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MMM</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MMM&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MMMM</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Convert the orderdate to custom date i.e <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">Wed</span> <span class="pre">Jan</span> <span class="pre">Q1</span> <span class="pre">2025</span> <span class="pre">12:41:56</span> <span class="pre">PM</span></code></p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="s1">&#39;Day &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Format</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ddd MMM &#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="s1">&#39;Q&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">DATENAME</span><span class="p">(</span><span class="n">quarter</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Format</span><span class="p">(</span><span class="n">CreationTime</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; yyyy hh:mm:ss tt&#39;</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p>This FORMAT() function can be used in many usecases. Those are :</p>
+<p><strong>Data Aggregations</strong> : Sometimes we want to show monthly sales as ‘Jan 2025’ format in reports. Inorder to get this format then we have to first convert the date into that format and perform aggregations. For this we need to use this FORMAT() function.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MMM yyyy&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">,</span>
+<span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">No_of_Orders</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">FORMAt</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MMM yyyy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Data Standardization</strong> : In real world scenarios, we might get data from different source systems such as APIs, databases, csv files etc where data might be stored in different formats. Such as date from APIs might be in <code class="docutils literal notranslate"><span class="pre">dd-MM-yy</span></code> format, databases might be <code class="docutils literal notranslate"><span class="pre">MM-dd-yyyy</span></code> format and csv files might be <code class="docutils literal notranslate"><span class="pre">dd/MM/yyyy</span></code> format. When we are moving all these data into centralized database then we have to clean and standardize these dates into one format and stored it in the centralized database.</p>
+</li>
+<li><p>Some Date and Time Format Specifiers are:</p>
+<p align="center">
+<img src="../_static/Date_and_Time_Format_Specifiers.png" alt="Date And Time Format Specifiers" width="1000"/>
+<br>
+<em>Date and Time Format Specifiers</em>
+</p>
+</li>
+<li><p>Some Number Format Specifiers are:</p>
+<p align="center">
+<img src="../_static/Number_Format_Specifiers.png" alt="Number Format Specifiers" width="1000"/>
+<br>
+<em>Number Format Specifiers</em>
+</p>
+</li>
+</ul>
+</section>
+<section id="convert-function">
+<h3>CONVERT Function<a class="headerlink" href="#convert-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>CONVERT() function is majorly used to convert the data type of a value from one type to anothor type and it also used to format that value. The basic syntax of the CONVERT() function is:</p>
+<p><strong>Syntax</strong> : <code class="docutils literal notranslate"><span class="pre">CONVERT(datatype,</span> <span class="pre">value,</span> <span class="pre">[,style])</span></code></p>
+</li>
+<li><p>In the above syntax, style could be optional. Generally it is code which is used to format the date, time and datetime values or any other datatypes. The general style codes used in convert function are shown below.</p>
+<p align="center">
+<img src="../_static/StyleCodes.png" alt="Style Codes" width="1000"/>
+<br>
+<em>Style Codes</em>
+</p>
+</li>
+<li><p><strong>Ex</strong> : Convert the CreationTime to Date type and format the creationtime to USA and european format</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="k">CONVERT</span><span class="p">(</span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CreationTime_date</span><span class="p">,</span>
+<span class="k">CONVERT</span><span class="p">(</span><span class="nb">VARCHAR</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">USA_format</span><span class="p">,</span>
+<span class="k">CONVERT</span><span class="p">(</span><span class="nb">VARCHAR</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Euro_format</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Note</strong> : Formatting has meaning when it type of value that you are formatting is string. Suppose if you first convert the CreationTime to date and then applied style code as 32 to change it to USA Format then it doesn’t change it usa format instead it ignores the syle code and keeps date as its. So here it does only casting and it doesn’t do formatting. So CONVERT() function is only formats the strings to values to specified format.</p></li>
+</ul>
+</section>
+<section id="cast-function">
+<h3>CAST Function<a class="headerlink" href="#cast-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>CAST() function is used to convert any data type to any data type if it is compatible. The basic syntax of CAST() function is :</p>
+<p><strong>Syntax</strong> : <code class="docutils literal notranslate"><span class="pre">CAST(value</span> <span class="pre">As</span> <span class="pre">Data_Type)</span></code></p>
+</li>
+<li><p><strong>Ex</strong> :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Int</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">String_to_Int</span><span class="p">,</span>
+<span class="k">CAST</span><span class="p">(</span><span class="mi">123</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Int_to_String</span><span class="p">,</span>
+<span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;2025-12-23&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">date</span><span class="p">)</span><span class="w"> </span><span class="k">As</span><span class="w"> </span><span class="n">String_to_Date</span><span class="p">,</span>
+<span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;2025-12-23&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">datetime2</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">String_to_DateTime</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Convert Custoemrs Order CreationTime to Date</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="k">CAST</span><span class="p">(</span><span class="n">CreationTime</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Date</span><span class="p">)</span><span class="w"> </span><span class="k">As</span><span class="w"> </span><span class="n">CreationTime_to_Date</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="comparision-of-formatting-and-casting-functions">
+<h3>Comparision of Formatting and Casting Functions<a class="headerlink" href="#comparision-of-formatting-and-casting-functions" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>CAST() function is mainly used to convert any type of data to any other type. It cannot do formatting. Whereas CONVERT() function is used tp convert any type of data to any other type of data and can also format the date and time data. I mean if Style parameter is given then the value must be in VARCHAR type and it formats that VARCHAR to any date or time formats which automatically implies if value in the form of VARCHAR must be date or datetime only. Then only it is compatible with style code. If formatting data is not VARCHAR then CONVERT() doesn’t perform formatting just does type casting and ignores style parameter. FORMAT() function always returns a string value which means it converts anytype of data to string only and it does formatting for both date, datetime and Numbers also.</p>
+<p align="center">
+<img src="../_static/Comparision_of_Casting_and_Formatting_Functions.png" alt="Comaprision Of Casting and Formatting Functions" width="1000"/>
+<br>
+<em>Comparisions of Casting and Formatting Functions</em>
+</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="date-calculation-functions">
+<h2>Date Calculation Functions<a class="headerlink" href="#date-calculation-functions" title="Link to this heading">#</a></h2>
+<section id="dateadd-function">
+<h3>DATEADD Function<a class="headerlink" href="#dateadd-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DATEADD() function is used tp add or subtracts dateparts from a particular Date value which means we can add or subtract days, months, years, weeks , hours, minutes, seconds and soon from the dates.</p></li>
+<li><p>For Date type values we add or subtract days, months, years, week, quarter but we didn’t add or subtract time from Date type values. We can add or subtract time related values then we can do it with DATETIME2 type.</p></li>
+<li><p><strong>Syntax</strong> : <code class="docutils literal notranslate"><span class="pre">DATEADD(datepart,interval,date)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">DATEADD(day,</span> <span class="pre">3,</span> <span class="pre">'2025-03-12')</span></code> -&gt; It adds 3 days to this date and returns <code class="docutils literal notranslate"><span class="pre">2025-03-15</span></code> as output.</p>
+</li>
+<li><p>DATEADD() supports all kinds of dateparts that are supported by DATEPART, DATENAME and DATETRUNC etc except iso_week.</p></li>
+<li><p><strong>Ex</strong> : Add 5 months to the order date to finds the sales after 5 months.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">DATEADD</span><span class="p">(</span><span class="k">month</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AfterFiveMonths</span><span class="p">,</span>
+<span class="n">DATEADD</span><span class="p">(</span><span class="k">day</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AfterFifteenDays</span><span class="p">,</span>
+<span class="n">DATEADD</span><span class="p">(</span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">BeforeTwoYears</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Add 12 hours to the Customers Order CreationTime</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">DATEADD</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">TwelveHoursAfter</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="datediff-function">
+<h3>DATEDIFF Function<a class="headerlink" href="#datediff-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>DATEDIFF() function is used to find the datepart difference between a startdate and enddate. This means we can find the no of years, month, days, weeks, hours, minutes between two dates.</p></li>
+<li><p><strong>Syntax</strong> : <code class="docutils literal notranslate"><span class="pre">DATEDIFF(datepart,</span> <span class="pre">startdate,</span> <span class="pre">enddate)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DATEDIFF(hour,2025-12-23,2025-12-24</span> <span class="pre">06:25:33)</span></code> results 30 hours. Because if you give date only instead of datetime then it considers that date as date 00:00:00. Here it considers 2025-12-23 as 2025-12-23 00:00:00 .</p></li>
+<li><p><strong>Ex</strong> :</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">CreationTime</span><span class="p">,</span>
+<span class="n">DATEADD</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="n">CreationTime</span><span class="p">),</span>
+<span class="n">DATEDIFF</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="n">DATEADD</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="n">CreationTime</span><span class="p">))</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Find the age of the employees</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">EmployeeId</span><span class="p">,</span>
+<span class="n">BirthDate</span><span class="p">,</span>
+<span class="n">DATEDIFF</span><span class="p">(</span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="n">BirthDate</span><span class="p">,</span><span class="n">GETDATE</span><span class="p">())</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Age</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Employees</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Find the number of days taken by comapany to ship an order</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">ShipDate</span><span class="p">,</span>
+<span class="n">DATEDIFF</span><span class="p">(</span><span class="k">day</span><span class="p">,</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="n">ShipDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ShippingDays</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ex</strong> : Find the no of days between current order and previous order</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">o</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">PreviousOrderID</span><span class="p">,</span>
+<span class="n">t</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CurrentOrderID</span><span class="p">,</span>
+<span class="n">o</span><span class="p">.</span><span class="n">OrderDate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">PreviousOrderDate</span><span class="p">,</span>
+<span class="n">t</span><span class="p">.</span><span class="n">OrderDate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CurrentOrderDate</span><span class="p">,</span>
+<span class="n">DATEDIFF</span><span class="p">(</span><span class="k">day</span><span class="p">,</span><span class="n">o</span><span class="p">.</span><span class="n">OrderDate</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">DayGap</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">t</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">OrderID</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="date-validation-function">
+<h2>Date Validation Function<a class="headerlink" href="#date-validation-function" title="Link to this heading">#</a></h2>
+<section id="isdate-function">
+<h3>ISDATE Function<a class="headerlink" href="#isdate-function" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>ISDATE() function is used to check whether given date is valid date or not. If it is valid date then it returns 1 else it returns 0. According to documentation, SQL Server actually detects the years after 1753 as valid dates and before that it doesn’t detect them as valid date. But DateTime2 and DATE data types stores years starting from 0 . And ISDATE() return true if it the date is ISO format only.</p></li>
+<li><p><strong>Syntax</strong> : <code class="docutils literal notranslate"><span class="pre">ISDATE(value)</span></code></p></li>
+<li><p>Generally ISDATE() function is commonly used to check string formatted dates. Because most of the date formats comming from the databases or applications or apis might be stored in form of strings. So we usually use ISDATE with varchar/nvarchar types only.</p></li>
+<li><p>It is used for data validation. When you are performing data cleaning and you want to standarize the dates then you first check whether the values are suitable for converting dates or not if yes then cast as dates else we keep it as NULL or keep dummy variables instead of them.</p></li>
+<li><p><strong>Ex</strong> : Validate the OrderDate by casting them as date if possible else fill it up with Null</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">SELECT</span>
+<span class="w">  </span><span class="n">OrderDate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ISDATE</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">flag</span><span class="p">,</span>
+<span class="w">  </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">ISDATE</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="n">OrderDate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nb">Date</span><span class="p">)</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="k">as</span><span class="w">  </span><span class="n">NewOrderDate</span>
+<span class="w">  </span><span class="k">FROM</span>
+<span class="w">  </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;2025-08-20&#39;</span><span class="w"> </span><span class="k">As</span><span class="w"> </span><span class="n">OrderDate</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;2025-08-21&#39;</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;2025-08-23&#39;</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;2025-08&#39;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">t</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./7_SQL_Functions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_Number_Functions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Number Functions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_Null_Functions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">NULL Functions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-part-extraction-functions">Date Part Extraction Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-month-year-functions">DAY, MONTH, YEAR Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datepart-function">DATEPART Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datename-function">DATENAME Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datetrunc-function">DATETRUNC Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eomonth-function">EOMONTH Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usecases-of-date-extraction-functions">Usecases of Date Extraction Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comaprisions-of-all-date-part-extraction-functions">Comaprisions of All Date Part Extraction Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-formatting-and-casting-functions">Date Formatting and Casting Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-fomatting-and-casting">Introduction to Fomatting and Casting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-function">FORMAT Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-function">CONVERT Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cast-function">CAST Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparision-of-formatting-and-casting-functions">Comparision of Formatting and Casting Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-calculation-functions">Date Calculation Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dateadd-function">DATEADD Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datediff-function">DATEDIFF Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-validation-function">Date Validation Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isdate-function">ISDATE Function</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

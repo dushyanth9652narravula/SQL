@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Basics of Window Functions &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '7_SQL_Functions/07_Basics_of_window_functions';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Window Aggregate Functions" href="08_Window_Aggregate_Functions.html" />
+    <link rel="prev" title="CASE WHEN Statement" href="06_CASE_WHEN_Statement.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../1_Introduction_to_SQL.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../1_Introduction_to_SQL.html">
+                    Introduction to SQL
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_Querying_Data.html">Querying the Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Data_Definition_Language.html">Data Definition Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Data_Manipulation_Language.html">Data Manipulation Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Filtering_Data.html">Filtering Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../6_Combining_Data/01_Introduction_to_combining_data.html">Combining Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6_Combining_Data/02_SQL_Joins.html">SQL Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6_Combining_Data/03_SQL_Set_Operators.html">SET Operators</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_Introduction_to_SQL_Functions.html">SQL Functions</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="02_String_Functions.html">String Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Number_Functions.html">Number Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_Date_and_Time_Functions.html">Date and Time Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_Null_Functions.html">NULL Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_CASE_WHEN_Statement.html">CASE WHEN Statement</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Basics of Window Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_Window_Aggregate_Functions.html">Window Aggregate Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_Window_Ranking_Functions.html">Window Ranking Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_Window_Value_Functions.html">Window Value Functions</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F7_SQL_Functions/07_Basics_of_window_functions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/7_SQL_Functions/07_Basics_of_window_functions.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Basics of Window Functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregate-functions">Aggregate Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#window-functions-vs-group-by">Window Functions VS GROUP BY</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-of-window-functions">Syntax of Window Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rules-of-window-functions">Rules of Window Functions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="basics-of-window-functions">
+<h1>Basics of Window Functions<a class="headerlink" href="#basics-of-window-functions" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Till now we have seen functions to handle and manipulate data which are the major steps while preparing the data. Generally, we call all these functions as row level function where each function takes single row as input and return single output.</p></li>
+<li><p>Now, we are going to see other type of SQL functions which are actually called as Multi-Row Functions where each function takes multiple rows as input and returns single value as output. These functions are majorly used for performing data analysis tasks such as creating measures and generating reports etc. In SQL we have two types of Multi-row functions. Those are Aggregate Functions and Window Functions.</p></li>
+</ul>
+</section>
+<section id="aggregate-functions">
+<h2>Aggregate Functions<a class="headerlink" href="#aggregate-functions" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Aggregate Functions takes multiple rows as input and returns single value as output. These functions are majorly used to analyze the data such as how many orders we got, what are the total and average sales that our customers made etc.</p></li>
+<li><p>Major aggregate functions we use generally are:</p>
+<p><strong>SUM()</strong> : SUM() function returns sum all values for a given input field or column or subset of a field.</p>
+<p><strong>AVG()</strong> : AVG() function returns average of all values for a given input field or column or subset of a field.</p>
+<p><strong>COUNT()</strong> : COUNT() function usually returns no of rows present in a given field. If you give <code class="docutils literal notranslate"><span class="pre">*</span></code> as input it would return all the rows present in the table or respective subset if GROUP BY is used.</p>
+<p><strong>MIN()</strong> : MIN() function returns the minimum value of a given field or column.</p>
+<p><strong>MAX()</strong> : MAX() function returns the maximum value of a given field or column.</p>
+</li>
+<li><p><strong>Ex</strong> : Find the total sales, average sales, total no of orders, minimum and maximum sales we have got from orders table.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">SUM</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">TotalSales</span><span class="p">,</span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AverageSales</span><span class="p">,</span>
+<span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">TotalOrders</span><span class="p">,</span>
+<span class="k">MIN</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MinimumSales</span><span class="p">,</span>
+<span class="k">MAX</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MaximumSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you combine these aggregate functions with GROUP BY then we might get analysis for particular group or category which is more useful for analytics part.</p></li>
+<li><p>But, we might get the situations where we need aggregations and also each level details. I mean by using GROUP BY we might get average sales of each customer made. But what if you want to know whether customer made any order with the order sales is more than the Average Sales. We cannot get order details along with aggregations using GROUP BY as GROUP BY decreases the level of granuality of the information. In this case GROUP BY removes all the other order details and keeps only aggregations and respctive category. But to solve above task, we need other levels of granuality of information such as sales made by each customer in each order etc.</p></li>
+<li><p>To do these kind of tasks, SQL provides new functions which are called as window functions.</p></li>
+</ul>
+</section>
+<section id="window-functions-vs-group-by">
+<h2>Window Functions VS GROUP BY<a class="headerlink" href="#window-functions-vs-group-by" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Window Functions are the type of SQL functions which are used to perform calculations (e.g aggregations) on specific subset of data, without losing the level of details of rows. This is similar to GROUP BY but with group by we lose level of details of rows.</p></li>
+<li><p>For example, we have 4 orders in our orders table where we have 2 products. Now we want to find the sales of each product. First lets apply GROUP BY. GROUP BY actually make same products into one group and sums up respective sales. In this case, we have it will return two rows and respective product sales. This means it automatically decreases the total rows to 2 by removing the row level details of each row. But what if you want to retain the row level details of each product such as orderID, sales along with average sales of each product. Then group by actually fails in these case.</p></li>
+<li><p>So for this we use window functions here. Now lets see what actually levels of granularity mean.
+Suppose we have 10 orders and lets find the average sales of all 10 orders.</p></li>
+<li><p>Now we write below sql query to get this.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AverageSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p>The above result shows highest level of granularity. Now lets go down to medium level of granularity by distributing these Average sales to each customer’s average sales. Here we actually use GROUP BY clause to get these results.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CustomerID</span><span class="p">,</span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AverageSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now we open anothor level of granularity where we need average sales of each customer along with their each order sales to check whether customer made any order with sales greater than average sales of the customer. This is actually low level of granularity. This could be achieved by window fuctions.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CustomerID</span><span class="p">,</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">OrderDate</span>
+<span class="n">Sales</span><span class="p">,</span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="p">(</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AverageSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p>From these we can see that GROUP BY clause is majorly used to do Simple Analytical tasks, where as window functions are used to do advanced analytical tasks where we need low level details of each rows.</p></li>
+</ul>
+</section>
+<section id="syntax-of-window-functions">
+<h2>Syntax of Window Functions<a class="headerlink" href="#syntax-of-window-functions" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The general Syntax of a window function is shown in below image.</p>
+<p align="center">
+<img src="../_static/Window_function_syntax.png" alt="Window Functions Syntax" width="1000"/>
+<br>
+<em>Window Function Syntax</em>
+</p>
+</li>
+<li><p>The first part in the syntax of the window function is WINDOW Function itself. This function is used to perform the calculations on top of window. There are different type of window functions available in SQL. Those are :</p>
+<p align="center">
+<img src="../_static/Window_Functions.png" alt="Window Functions" width="1000"/>
+<br>
+<em>Window Functions</em>
+</p> 
+</li>
+<li><p>This window function accepts arguments to perform the task. Theose argument might be empty or a column or a Number or a Conditional logic or it might accept multiple arguments. Some example asre shown below.</p>
+<p align="center">
+<img src="../_static/Window_Expressions.png" alt="Window Expressions" width="1000"/>
+<br>
+<em>Window Expressions</em>
+</p> 
+</li>
+<li><p>The second part of window function is OVER() clause which defines the window and tells sql that these function defined before is used as window function. This OVER() has some optional clauses. Those are PARTITION clause, ORDER Clause, FRAME Clause.</p></li>
+<li><p><strong>PARTITION BY</strong> : PARTITION BY CLAUSE actually divides the dataset into windows or partitions or groups similar to GROUP BY clause. PARTITION BY clause divides the dataset into windows based on the columns. Below image shows how partition by do calculations.</p>
+<p align="center">
+<img src="../_static/Partition_By.png" alt="Partition By" width="1000"/>
+<br>
+<em>Partition By Calaculations</em>
+</p> 
+<p>We can do calculations without partition by which makes entire dataset as one window. We can do calculations by doing partitions of entire dataset using one or multiple columns.</p>
+<p align="center">
+<img src="../_static/Partition_By_Examples.png" alt="Partition By Examples" width="1000"/>
+<br>
+<em>Partition By Examples</em>
+</p> 
+<p>Now lets find the average sales of each product along with orderID, orderDate, Sales</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderId</span><span class="p">,</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">ProductId</span><span class="p">,</span>
+<span class="n">Sales</span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ProductID</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">SalesByProduct</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>ORDER BY</strong> : ORDER BY Clause is used to sort each window seperately. If we use ORDER BY along with PARTITION BY then ORDER BY actually sorts each window seperately either in ascending ot descending order.Otherwise it sorts enitre dataset as entire dataset is considered as single window if PARTITION BY is not specified. Generally Order BY clause is mandatory when we are using window rank and value functions.</p>
+<p><strong>Ex</strong> : Rank each order based on thier sales from highest to lowest additionally provide details such as OrderID, OrderDate etc.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">Sales</span><span class="p">,</span>
+<span class="n">Rank</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="p">(</span><span class="k">Order</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">RankSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>FRAME</strong> : FRAMES are used to define windows within the partition or windows itself. Generally we partitions inside partitions are FRAMES. Here we are not actually partitioning the data. We are actually sliding a window upon partitions and do calculations upon rows in that sliding window inside partitions. To create that sliding window we use frames. We can see frames in the below image.</p>
+<p align="center">
+<img src="../_static/Frame.png" alt="Frames" width="1000"/>
+<br>
+<em>Demosntration of Frames</em>
+</p> 
+<p>The syntax of Frame consists of Frame Type, Lower and Upper Boundray. We have two Frame Types. Those are <code class="docutils literal notranslate"><span class="pre">ROWS</span></code> and <code class="docutils literal notranslate"><span class="pre">RANGE</span></code>. <code class="docutils literal notranslate"><span class="pre">ROW</span></code> generally indicates rows in the table whereas <code class="docutils literal notranslate"><span class="pre">RANGE</span></code> indicates the range of values which are equivalent to current value. Lower Boundary values are <code class="docutils literal notranslate"><span class="pre">CURRENT</span> <span class="pre">ROW</span></code>(indicates current pointing row), <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">PRECEDING</span></code> (N rows preceding current row), <code class="docutils literal notranslate"><span class="pre">UNBOUNDED</span> <span class="pre">PRECEDING</span></code> (pointer before first row). Upper Boundaries are <code class="docutils literal notranslate"><span class="pre">CURRENT</span> <span class="pre">ROW</span></code>, <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">FOLLOWING</span></code> (N rows after current row), <code class="docutils literal notranslate"><span class="pre">UNBOUNDED</span> <span class="pre">FOLLOWING</span></code> (pointer after last row).</p>
+<p align="center">
+<img src="../_static/Frame_Syntax.png" alt="Frames Syntax" width="1000"/>
+<br>
+<em>Syntax of Frames</em>
+</p>  
+<p>There are some rules for using Frames. Frame Clause must be used together with order by clause only. Lower value must be before higher value.</p>
+<p><strong>Ex</strong> : Find the cumulative sum of each sales by each customer from first order to lastorder by including OrderID, CustomerID, OrderDate, Sales.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">CustomerID</span><span class="p">,</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">Sales</span><span class="p">,</span>
+<span class="k">SUM</span><span class="p">(</span><span class="n">Sales</span><span class="p">)</span><span class="w"> </span><span class="n">Over</span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">OrderDate</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="n">UNBOUNDED</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CumulativeSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+<p>Generally, if you use orderby then there would be default frame i.e <code class="docutils literal notranslate"><span class="pre">RANGE</span> <span class="pre">BETWEEN</span> <span class="pre">UNBOUNDED</span> <span class="pre">PRECEDING</span> <span class="pre">AND</span> <span class="pre">CURRENT</span> <span class="pre">ROW</span></code></p>
+<p><strong>Ex</strong> : Rank the orders based on their sales from highest to lowest additionally provide details of orderdate, orderid etc.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">OrderID</span><span class="p">,</span>
+<span class="n">OrderDate</span><span class="p">,</span>
+<span class="n">Sales</span><span class="p">,</span>
+<span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="p">(</span><span class="k">Order</span><span class="w"> </span><span class="k">By</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+</pre></div>
+</div>
+<p align="center">
+<img src="../_static/RankSales_Output.png" alt="Rank Sales Output" width="1000"/>
+<br>
+<em>Rank Sales Output</em>
+</p>  
+<p>In this example if you see the output, the rank of order 4 and 10 is same because they have same sales. We achieved this because by default the Frame Type is <code class="docutils literal notranslate"><span class="pre">RANGE</span></code>. RANGE actually defines a frame that starts at the lower boundary and includes every row whose ORDER BY column (sales here) has the same value as the current row. Since order 8 and 10 has same sales it given same rank. But RANK functions generally won’t allow frames and its only decided by the order by clause itself. Below image shows the type of clauses allowed by each window functions.</p>
+<p align="center">
+<img src="../_static/Window_Function_Clauses.png" alt="Window Function Clause Allowance" width="1000"/>
+<br>
+<em>Window Functions Clause Allowance</em>
+</p>
+</li>
+<li><p>So Overall Syntax of Window Function is shown below.</p>
+<p align="center">
+<img src="../_static/window_syntax.png" alt="Overall Window Function Syntax" width="1000"/>
+<br>
+<em>Overall Window Function Syntax</em>
+</p>
+</li>
+</ul>
+</section>
+<section id="rules-of-window-functions">
+<h2>Rules of Window Functions<a class="headerlink" href="#rules-of-window-functions" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>Rule 1</strong> : Window Functions can be used only in SELECT and ORDER BY Clause.</p></li>
+<li><p><strong>Rule 2</strong> : Nesting Window Functions are not allowed.</p></li>
+<li><p><strong>Rule 3</strong> : SQL execute window functions after WHERE Clause.</p></li>
+<li><p><strong>Rule 4</strong> : Window Functions can be used together with GROUP BY Clause in the same query, ONLY if the same columns are used.</p>
+<p><strong>Ex</strong> : Rank the customers based on thier sales.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="n">CustomerID</span><span class="p">,</span>
+<span class="k">SUM</span><span class="p">(</span><span class="n">Sales</span><span class="p">),</span>
+<span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">Sales</span><span class="p">))</span><span class="w"> </span><span class="k">As</span><span class="w"> </span><span class="n">RankCustomers</span>
+<span class="k">From</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">Orders</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./7_SQL_Functions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06_CASE_WHEN_Statement.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CASE WHEN Statement</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="08_Window_Aggregate_Functions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Window Aggregate Functions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregate-functions">Aggregate Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#window-functions-vs-group-by">Window Functions VS GROUP BY</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-of-window-functions">Syntax of Window Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rules-of-window-functions">Rules of Window Functions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
